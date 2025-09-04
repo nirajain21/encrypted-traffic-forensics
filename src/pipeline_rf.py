@@ -13,7 +13,7 @@ FLOW_DIR     = os.path.expanduser('~/flows')
 os.makedirs(FIG_DIR, exist_ok=True)
 os.makedirs(FLOW_DIR, exist_ok=True)
 
-# pick one NONVPN and one VPN sample you have
+# picking one NONVPN and one VPN sample 
 NONVPN_PCAP  = os.path.expanduser('~/datasets/iscx/aim_chat_3a_fixed.pcap')
 VPN_PCAP     = os.path.expanduser('~/datasets/iscx/VPN/vpn_facebook_chat1b_classic.pcap')
 
@@ -68,7 +68,7 @@ def extract_packets(pcap_path: str, out_csv: str) -> pd.DataFrame:
     df['dst_port'] = df['tcp_d'].fillna(0).astype('Int64')
     df.loc[df['dst_port'].isna() | (df['dst_port'] == 0), 'dst_port'] = df['udp_d']
 
-    # keep only the columns we need
+    # keeping only the columns we need
     keep = ['src_ip','dst_ip','src_port','dst_port','proto','len','t']
     df = df[keep].dropna()
     return df
@@ -79,7 +79,7 @@ def build_flow_features(df_packets: pd.DataFrame, out_csv: str) -> pd.DataFrame:
     Aggregate per-packet rows to per-flow features. Save CSV and return DF.
     """
     if df_packets.empty:
-        # Create an empty DF with the correct columns so downstream doesn’t crash
+        # Creating an empty DF with the correct columns so downstream doesn’t crash
         empty = pd.DataFrame(columns=['src_ip','dst_ip','src_port','dst_port','proto',
                                       'pkts','bytes','duration','bps','pps','avg_len'])
         empty.to_csv(out_csv, index=False)
@@ -116,7 +116,7 @@ def save_prediction_plots(df_flows: pd.DataFrame, tag: str, out_prefix: str):
     """
     counts = df_flows['Prediction'].value_counts().reindex(['NONVPN','VPN'], fill_value=0)
 
-    # bar
+    # bar chart
     plt.figure()
     counts.plot(kind='bar')
     plt.title(f'{tag} Prediction Distribution')
@@ -128,7 +128,7 @@ def save_prediction_plots(df_flows: pd.DataFrame, tag: str, out_prefix: str):
     plt.close()
     print(f"[✓] Saved bar plot → {bar_path}")
 
-    # pie
+    # pie chart
     plt.figure()
     counts.plot(kind='pie', autopct='%1.1f%%')
     plt.title(f'{tag} Prediction Share')
@@ -166,7 +166,7 @@ def predict_on_pcap(pcap_path: str, tag: str, out_prefix: str):
     print(f"[+] Loading model: {MODEL_PATH}")
     model = joblib.load(MODEL_PATH)
 
-    # ensure feature order and missing columns are handled
+    # ensuring feature order and missing columns are handled
     for col in FEATURE_ORDER:
         if col not in df_flows.columns:
             df_flows[col] = 0
