@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+cfm-env/
+*.ipynb_checkpoints/
+data/
+models/
+flows/
+!flows/.gitkeep
+*.pcap
+*.pcapng
+*.zip
+.DS_Store
+.vscode/
+.idea/
