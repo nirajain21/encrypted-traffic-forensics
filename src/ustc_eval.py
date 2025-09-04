@@ -45,11 +45,11 @@ def tshark_packets_to_csv(pcap_path: str, out_csv: str) -> pd.DataFrame:
         print(f"[!] tshark failed on {pcap_path}: {e}")
         return pd.DataFrame()
 
-    # write and load robustly
+    # writing and loading robustly
     with open(out_csv, 'w') as f:
         f.write(raw)
 
-    # Read with python engine and skip bad lines safely
+    # Reading with python engine and skip bad lines safely
     try:
         df = pd.read_csv(out_csv, engine='python', on_bad_lines='skip')
     except Exception as e:
