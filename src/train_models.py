@@ -32,7 +32,7 @@ FIG   = Path(os.path.expanduser('~/figures')); FIG.mkdir(parents=True, exist_ok=
 MODELS= Path(os.path.expanduser('~/models'));  MODELS.mkdir(parents=True, exist_ok=True)
 REPORT= FIG / 'metrics_summary.txt'
 
-# Load & clean
+# Loading & cleaning
 df = pd.read_csv(CSV)
 df = df.replace([np.inf, -np.inf], np.nan).dropna()
 assert {'label','pkts','bytes','duration','bps','pps','avg_len','src_port','dst_port','proto'}.issubset(df.columns)
@@ -155,13 +155,13 @@ def evaluate_and_plot(model_name, pipe, use_binary_y=False):
         plt.savefig(imp_path); plt.close()
         out['importance_plot'] = str(imp_path); out['importance_type'] = 'PermutationImportance'
 
-    # Save model
+    # Saving model
     import joblib
     model_path = MODELS / f"{model_name}.pkl"
     joblib.dump(pipe, model_path)
     out['model_path'] = str(model_path)
 
-    # Print summary
+    # Printing summary
     print(f"\n=== {model_name} ===")
     print(f"Train time: {out['train_seconds']}s | Inference: {out['infer_seconds']}s "
           f"({out['infer_ms_per_1000_flows']} ms / 1000 flows)")
