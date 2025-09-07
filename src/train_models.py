@@ -1,4 +1,5 @@
-import os, time, json, warnings, numpy as np, pandas as pd
+#Train both Random Forest and XGBoost on ISCX dataset.
+#import os, time, json, warnings, numpy as np, pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
 from sklearn.model_selection import train_test_split
