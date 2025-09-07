@@ -1,3 +1,4 @@
+#Focused training for Random Forest only.
 import os, pandas as pd, numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
