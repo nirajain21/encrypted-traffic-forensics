@@ -1,3 +1,4 @@
+#Apply trained RF model to a new single PCAP.
 #!/usr/bin/env python3
 import os
 import subprocess
